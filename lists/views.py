@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from lists.forms import ItemForm
 from lists.models import Item, List
 
 def home_page(request):
-    return render(request, 'lists/home.html')
+    return render(request, 'lists/home.html', {'form': ItemForm()})
 
 def new_list(request):
     list_ = List.objects.create()
