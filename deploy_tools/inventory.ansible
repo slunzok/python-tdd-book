@@ -1,0 +1,8 @@
+[live]
+todo.prq.crux.uberspace.de ansible_become=yes ansible_ssh_user=kuba
+
+[staging]
+todo-staging.prq.crux.uberspace.de ansible_become=yes ansible_ssh_user=kuba
+
+[local]
+localhost ansible_ssh_user=root ansible_ssh_port=6666 ansible_host=127.0.0.1
