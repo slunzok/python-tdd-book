@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
 from django.contrib.auth import get_user_model
 from lists.forms import ExistingListItemForm, ItemForm, NewListForm
 from lists.models import Item, List
@@ -9,6 +9,14 @@ User = get_user_model()
 class HomePageView(FormView):
     template_name = 'lists/home.html'
     form_class = ItemForm
+
+class NewListView(CreateView):
+    template_name = 'lists/home.html'
+    form_class = NewListForm
+
+    def form_valid(self, form):
+        list_ = form.save(owner=self.request.user)
+        return redirect(str(list_.get_absolute_url()))
 
 def new_list(request):
     form = NewListForm(data=request.POST)
