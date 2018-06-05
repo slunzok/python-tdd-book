@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, DetailView
 from django.contrib.auth import get_user_model
 from lists.forms import ExistingListItemForm, ItemForm, NewListForm
 from lists.models import Item, List
@@ -34,6 +34,15 @@ def view_list(request, list_id):
             form.save()
             return redirect(list_)
     return render(request, 'lists/list.html', {'list': list_, 'form': form})
+
+class ViewAndAddToList(DetailView, CreateView):
+    model = List
+    template_name = 'lists/list.html'
+    form_class = ExistingListItemForm
+
+    def get_form(self):
+        self.object = self.get_object()
+        return self.form_class(for_list=self.object, data=self.request.POST)
 
 def my_lists(request, email):
     owner = User.objects.get(email=email)
