@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'accounts',
     'functional_tests',
     'behave_django',
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
